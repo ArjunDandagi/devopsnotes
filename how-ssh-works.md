@@ -34,6 +34,12 @@ same image of the answer:
   ```
   ssh -vvv  myuser@localhost 
   ```
-
-EXTRA:
+# The Geeky Way
 https://www.thegeekyway.com/ultimate-guide-how-ssh-works/
+
+
+#Additional learning :
+1. [ssh hacks](http://matt.might.net/articles/ssh-hacks/)
+
+
+
