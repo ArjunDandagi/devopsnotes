@@ -8,7 +8,7 @@ same image of the answer:
 ![](https://i.stack.imgur.com/4cZbh.png)
 
 
-# digital oceans indepth answer 
+# digital oceans indepth answer [LINK ](https://www.digitalocean.com/community/tutorials/understanding-the-ssh-encryption-and-connection-process#)
 
 
 1. diffie hellman algo is being used to generate a symmetric key first
@@ -35,3 +35,5 @@ same image of the answer:
   ssh -vvv  myuser@localhost 
   ```
 
+EXTRA:
+https://www.thegeekyway.com/ultimate-guide-how-ssh-works/
