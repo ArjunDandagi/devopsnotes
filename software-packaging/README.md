@@ -33,6 +33,8 @@ Have developed a pip package named 'stupidrealbash'
  3. sign code of conduct ( using gpg) 
  all the above steps are mentioned [here](https://help.ubuntu.com/community/GnuPrivacyGuardHowto#Uploading_the_key_to_Ubuntu_keyserver)
  
+ https://askubuntu.com/questions/71510/how-do-i-create-a-ppa
+ 
  once the signing is done , create a ppa .. mine is `ppa:arjundandagi/dirtouch`
  
  [Joe Collins](https://youtu.be/ep88vVfzDAo) video explain about how to package it as .deb file and distribute and install using `dpkg -i file.deb` command 
