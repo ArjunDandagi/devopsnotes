@@ -27,6 +27,14 @@ Have developed a pip package named 'stupidrealbash'
  `brew install dirtouch` <-- my version of dirtouch 
  
  # apt 
+ 1. create account in launchpad 
+ 2. generate gpg key 
+ 3. upload to keyserver.ubuntu.com
+ 3. sign code of conduct ( using gpg) 
+ all the above steps are mentioned [here](https://help.ubuntu.com/community/GnuPrivacyGuardHowto#Uploading_the_key_to_Ubuntu_keyserver)
+ 
+ once the signing is done , create a ppa .. mine is `ppa:arjundandagi/dirtouch`
+ 
  [Joe Collins](https://youtu.be/ep88vVfzDAo) video explain about how to package it as .deb file and distribute and install using `dpkg -i file.deb` command 
  
  The tree structure should be something like this for that . also note about the root directory. it is `file_version_os_arch`
