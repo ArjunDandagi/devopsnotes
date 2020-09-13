@@ -27,7 +27,7 @@ Have developed a pip package named 'stupidrealbash'
  `brew install dirtouch` <-- my version of dirtouch 
  
  # apt 
- [Joe Collins]() video explain about how to package it as .deb file and distribute and install using `dpkg -i file.deb` command 
+ [Joe Collins](https://youtu.be/ep88vVfzDAo) video explain about how to package it as .deb file and distribute and install using `dpkg -i file.deb` command 
  
  The tree structure should be something like this for that . also note about the root directory. it is `file_version_os_arch`
 ```
