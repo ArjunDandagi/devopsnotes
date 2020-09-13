@@ -60,4 +60,8 @@ touch $@
  
  launchpad wont accept a .deb file directly.. so need to work on that yet.
  
+ I have tried doing the following as well : 
+ [Stack overflow](https://askubuntu.com/questions/27715/create-a-deb-package-from-scripts-or-binaries/27731#27731)
+ [for python packaged as apt](https://askubuntu.com/questions/90764/how-do-i-create-a-deb-package-for-a-single-python-script)
+ 
  //TODO: create a package in launchpad to install a package using apt
