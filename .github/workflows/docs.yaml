@@ -3,7 +3,7 @@ name: docs
 on:
   push:
     branches:
-      - master
+      - whatever
 jobs:
   docs:
     runs-on: ubuntu-latest
