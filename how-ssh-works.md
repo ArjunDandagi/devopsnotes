@@ -34,6 +34,7 @@ same image of the answer:
   ```
   ssh -vvv  myuser@localhost 
   ```
+
 # The Geeky Way
 https://www.thegeekyway.com/ultimate-guide-how-ssh-works/
 
