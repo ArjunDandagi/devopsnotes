@@ -50,8 +50,8 @@ dirtouch_1.0.0_linux_amd64
 
 ```
  contents of `dirtouch` shell script are like this 
- ```
  
+ ``` 
  #!/bin/bash
 
 if [ $# -eq 0 ];
