@@ -1,2 +1,2 @@
 - Packaging 
-    - [pip-gem-brew-apt](software-packaging/README.md)
+    - [pip-gem-brew-apt](software_packaging.md)
