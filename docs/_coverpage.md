@@ -1,4 +1,4 @@
-![logo](_media/logo.jpg)
+![logo](./_media/logo.jpg =100x20)
 
 # DevopsNotes <small>My DevOps notes as website docs</small>
 
