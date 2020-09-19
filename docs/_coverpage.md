@@ -11,4 +11,4 @@
 
 [Twitter](https://twitter.com/arjundandagi)
 [GitHub](https://github.com/arjundandagi/)
-[Getting Started](#devopsnotes)
+[LinkedIn](https://linkedin.com/in/arjundandagi)
