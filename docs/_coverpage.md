@@ -12,3 +12,5 @@
 [Twitter](https://twitter.com/arjundandagi)
 [GitHub](https://github.com/arjundandagi/)
 [LinkedIn](https://linkedin.com/in/arjundandagi)
+
+:point_down: scroll Down :point_down: to begin reading :smile:
