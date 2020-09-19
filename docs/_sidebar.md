@@ -1,2 +1,2 @@
 - Packaging 
-    - [pip-gem-brew-apt](../software-packaging)
+    - [pip-gem-brew-apt](../software-packaging/)
