@@ -15,7 +15,17 @@
     window.$docsify = {
       name: 'DevOps Notes',
       repo: '',
-      loadSidebar: true
+      loadSidebar: true,
+      search: {
+        noData: {
+          '/': 'No results!'
+        },
+        paths: 'auto',
+        placeholder: {
+          '/': 'Search'
+        }
+      },
+      
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
