@@ -21,24 +21,19 @@
     window.$docsify = {
       name: 'DevOps Notes',
       repo: 'https://github.com/ArjunDandagi/devopsnotes',
-      search: 'auto', // default
-      search : [
-        '/',
-      ],
+      
       coverpage: true,
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
       relativePath: true,
+      mergeNavbar: true,
+      formatUpdated: '{MM}/{DD} {HH}:{mm}',
       search: {
-        noData: {
-          '/': 'No results!'
-        },
         paths: 'auto',
-        placeholder: {
-          '/': 'Search'
-        }
-      },
+        placeholder: 'Type to search 🔍',
+        noData: 'No Results! 😞',
+      }
       
     }
   </script>
