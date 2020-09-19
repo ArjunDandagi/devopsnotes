@@ -6,7 +6,8 @@
 > All stuff I read everyday will be logged.
 
 - :penguin: Linux 
-- :python: Python
+- :snake: Python
+- :whale: Docker
 - :package: Software Packaging 
 - :books: And many more 
 
