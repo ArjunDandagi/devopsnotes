@@ -1,4 +1,5 @@
-![logo](./_media/logo.jpg =100x20)
+
+:book:
 
 # DevopsNotes <small>My DevOps notes as website docs</small>
 
