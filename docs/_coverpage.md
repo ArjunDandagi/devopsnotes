@@ -13,7 +13,8 @@
 
 [Twitter](https://twitter.com/arjundandagi)
 [GitHub](https://github.com/arjundandagi/)
+[START READING](#devops-notes)
 [LinkedIn](https://linkedin.com/in/arjundandagi)
-[START READING](#DevOps-Notes)
+
 
 
