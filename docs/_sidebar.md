@@ -1,3 +1,3 @@
 - Packaging 
     - [pip-gem-brew-apt](software_packaging.md)
-    - [pip-this-that](software-packaging/README.md)
+    - [Software Packaging](software-packaging/README.md)
