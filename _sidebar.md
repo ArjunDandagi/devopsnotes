@@ -1,2 +1,0 @@
-- Packaging
-    - [pip-gem-brew-apt](software-packaging/README.md)
