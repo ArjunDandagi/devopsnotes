@@ -51,7 +51,7 @@ dirtouch_1.0.0_linux_amd64
 ```
  contents of `dirtouch` shell script are like this 
  
- ``` 
+ ```bash
  #!/bin/bash
 
 if [ $# -eq 0 ];
@@ -67,10 +67,9 @@ fi
 
 FOLDER=$(echo "$@" | xargs -n 1 | rev | cut -d "/" -f2- | rev | sort | uniq | xargs -n 1 mkdir -p )
 touch $@
-
  ```
  
- launchpad wont accept a .deb file directly.. so need to work on that yet.
+ ?> launchpad wont accept a .deb file directly.. so need to work on that yet.
  
  I have tried doing the following as well : 
  [Stack overflow](https://askubuntu.com/questions/27715/create-a-deb-package-from-scripts-or-binaries/27731#27731)
