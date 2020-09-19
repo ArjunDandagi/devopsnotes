@@ -1,5 +1,6 @@
-# pip 
+# Software Packaging
 
+## pip :snake:
 packaging for python application
 you can use twine to upload , need to have account in pypi.org , the package name is universal . test.pypi.org for testing purpose
 
@@ -8,7 +9,7 @@ Have developed a pip package named 'stupidrealbash'
 [Pip Link](https://pypi.org/project/stupidrealbash/)
 
 
-# ruby gem 
+## Ruby gem :gem: 
  packaging for ruby application/modules
  
  have developed a simple gem 
@@ -18,7 +19,7 @@ Have developed a pip package named 'stupidrealbash'
  [Gem Link](https://rubygems.org/gems/arjun)
  
  
- # Brew , 
+ ## HomeBrew ( For Mac ) :beer:
  taps are nothing but the github repo/ or the common place where you keep your formulas 
  mine is now at https://github.com/arjundandagi/homebrew-brew
  
@@ -26,7 +27,7 @@ Have developed a pip package named 'stupidrealbash'
  using 
  `brew install dirtouch` <-- my version of dirtouch 
  
- # apt 
+ ## Apt 
  1. create account in launchpad 
  2. generate gpg key 
  3. upload to keyserver.ubuntu.com
@@ -50,7 +51,7 @@ dirtouch_1.0.0_linux_amd64
 
 ```
  contents of `dirtouch` shell script are like this 
- ```
+ ```bash
  #!/bin/bash
 
 if [ $# -eq 0 ];
