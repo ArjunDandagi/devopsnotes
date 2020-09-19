@@ -1,4 +1,4 @@
-![logo](_media/icon.svg)
+![logo](_media/logo.jpg)
 
 # DevopsNodes <small>My devops notes as website docs</small>
 
