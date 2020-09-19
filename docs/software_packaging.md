@@ -51,6 +51,7 @@ dirtouch_1.0.0_linux_amd64
 ```
  contents of `dirtouch` shell script are like this 
  ```
+ 
  #!/bin/bash
 
 if [ $# -eq 0 ];
@@ -66,6 +67,7 @@ fi
 
 FOLDER=$(echo "$@" | xargs -n 1 | rev | cut -d "/" -f2- | rev | sort | uniq | xargs -n 1 mkdir -p )
 touch $@
+
  ```
  
  launchpad wont accept a .deb file directly.. so need to work on that yet.
