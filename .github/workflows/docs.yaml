@@ -12,4 +12,4 @@ jobs:
     - uses: tool3/docsify-action@master
       with:
         github_token: ${{ secrets.GP_TOKEN }}
-        dir: .
+        dir: docs
