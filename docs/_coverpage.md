@@ -1,5 +1,5 @@
 
-:book:
+![logo](_media/logo.svg | width=100)
 
 # DevopsNotes <small>My DevOps notes as website docs</small>
 
