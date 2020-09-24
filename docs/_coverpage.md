@@ -1,5 +1,5 @@
 
-![logo](_media/logo.svg | width=100)
+![logo](_media/logo.svg)
 
 # DevopsNotes <small>My DevOps notes as website docs</small>
 
