@@ -1,7 +1,7 @@
 
 ![logo](_media/logo.svg)
 
-# DevopsNotes <small>My DevOps notes as website docs</small>
+<small>My DevOps notes as website docs</small>
 
 > All stuff I read everyday will be logged.
 
