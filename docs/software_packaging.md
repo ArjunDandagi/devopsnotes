@@ -77,13 +77,13 @@ touch $@
  
  //TODO: create a package in launchpad to install a package using apt
  
- ## npm
+ # npm
  
  > prints-yourname
 
 Prints yourname , in to the console 
 
-### USAGE:
+## USAGE:
 
 install the package using command 
 
@@ -98,7 +98,7 @@ $ echo "require('prints-yourname');" > index.js
 $ node index.js
 ```
 
-### HOW?
+## HOW?
 
 1. create a folder ( prints-yourname) //its already taken now , so use a different one 
 2. cd <folder>
@@ -111,6 +111,8 @@ $ node index.js
 The only requirement to publish to npm registry is  package.json . how cool is that . 
 
 I have learnt packaging for Brew , pip , apt ... but this is the one i really liked :) 
+
+[Link to my npm package](https://www.npmjs.com/package/prints-yourname)
 
 
 
