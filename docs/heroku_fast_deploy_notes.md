@@ -1,5 +1,5 @@
 # quickly start a react app and deploy with git and heroku 
-
+[LINK TO HEROKU BLOG](https://blog.heroku.com/deploying-react-with-zero-configuration)
 ```
 npm install -g create-react-app
 create-react-app my-app
