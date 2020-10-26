@@ -194,7 +194,84 @@ fork do
 end
 ```
 
-# Chapter 12: Orphaned Processes
+## Chapter 12: Orphaned Processes
+
+```
+fork do 
+ 5.times do
+  sleep 1
+  puts "I'm an orphan!"
+ end
+end
+abort "Parent process died..."
+```
+after the control exited also the child continuous to display "I'm an orphan!" :)
+
+so we need to manage child processes properly 
+
+**What happens to a child process when its parent dies?**
+The short answer is, nothing. 
+That is to say, the operating system doesn't treat child processes any differently than any other processes.
+So, when the parent process dies the child process continues on; the parent process does not take the child down with it.
+
+Daemon processes are long running processes that are intentionally orphaned and meant to stay running forever. (systemd unit files ?) 
+
+if a process is not attached to a terminal session how will you kill it? ( by sending signal :smile:  like kill -9 <PID>)
+ 
+ 
+## Chapter 13: Processes Are Friendly
+
+systems simply dont copy everything in memory when there is fork 
+
+Physically copying all of that data can be considerable overhead,
+so modern Unix systems employ something called copy-on-write semantics (CoW) to combat this. ( they dont copy unless the child process wants to mess with it than reading)
+CoW (copy on write) delays the actual copying of memory until it needs to be written. (  until one of them needs to modify it. )
+
+copy on write ( forks wont copy everything when you fork child :smile: )
+```
+ this wont  copy the memory object arr
+
+arr = [1,2,3,4]
+fork do 
+ p arr
+end
+
+while this creates separate copy when we start to make changes 
+
+arr = [1,2,3,4]
+fork do 
+ arr << 4
+end
+
+```
+
+## Chapter 14: Processes Can Wait
+
+fire and forget is good example of unhandled fork , a child can ship logs while the parent can continue to do business logic is one such example . ( for example)
+
+```
+fork do 
+  5.times do
+    sleep 1
+    puts "I'm an orphan!"
+  end
+end
+
+ 
+# this is just waiting till child completes its execution 
+#Process.wait returns the pid of the child that exited
+puts Process.wait
+
+abort "Parent process died..."
+```
+
+
+
+
+
+
+
+
 
 
 
