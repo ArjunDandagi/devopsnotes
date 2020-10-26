@@ -162,6 +162,45 @@ abort "hmm somehing went wrong" # will call at_exit
 
 ## Chapter 11: Processes Can Fork
 
+The child process inherits a copy of all of the memory in use by the parent process, as well as any open file descriptors belonging to the parent process.
+
+```
+if fork
+ puts "entered the if block #{Process.pid}"
+else
+ puts "entered the else block #{Process.pid}"
+end
+
+## output 
+enterd the if block 222 # parent 
+entered the else block 223 # why?  --> returns twice ,one in the calling , another in the called 
+
+One call to the fork method actually returns twice. Remember that fork creates a new process. So it returns once in the calling process (parent) and once in the newly created process (child).
+
+```
+
+The call to fork returns near-instantly so we now have 3 processes with each using 500MB of memory. Perfect for when you want to have multiple instances of your application loaded in memory at the same time. Because only one process needs to load the app and forking is fast, this method is faster than loading the app 3 times in separate instances.
+
+The child processes would be free to modify their copy of the memory without affecting what the parent process has in memory ( copy on write )
+
+fork bomb? ( if you fork the same app that takes 500mb 20-40 times , you are fork bombing your system) 
+
+multiple cores? , a fork can not guarantee if the process gets distributed to all the cores . 
+
+using block can solve this 
+```
+fork do 
+## execute anything as part of child process now
+end
+```
+
+# Chapter 12: Orphaned Processes
+
+
+
+
+
+
 
 
 
