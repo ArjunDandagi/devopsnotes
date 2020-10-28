@@ -264,6 +264,53 @@ puts Process.wait
 
 abort "Parent process died..."
 ```
+when a child a exits before parent , the kernel ensure the race condition/errors wont happen when parent was busy doing its work 
+it queues the exit code and stuff related to child processes. 
+
+FORK is all about unix processes:
+At the core of this pattern is the concept that you have one process that forks several child processes, for concurrency, and then spends its time looking after them: making sure they are still responsive, reacting if any of them exit, etc.
+
+
+## Chapter 15: Zombie Processes
+
+stack overflow :
+An **orphan process** is a computer process whose parent process has finished or terminated, though it (child process) remains running itself.
+A **zombie process** or defunct process is a process that has completed execution but still has an entry in the process table as its parent process didn't invoke an wait() system call
+
+back to author's words on what a zombie is:
+The kernel will retain the status of exited child processes until the parent process requests that status using Process.wait . If the parent never requests the status then the kernel can never reap that status information. So creating fire and forget child processes without collecting their status information is a poor use of kernel resources.
+
+Que: then how can you exit and let the child be an adult and takes care of its own life?
+Answer: you need to detach it :smile:
+in ruby you can use Process.detach(pid) 
+
+example:
+```
+message = 'Good Morning'
+recipient = 'tree@mybackyard.com'
+# In this contrived example the parent process forks a child to take
+# care of sending data to the stats collector. Meanwhile the parent
+# process has continued on with its work of sending the actual payload.
+end
+# The parent process doesn't want to be slowed down with this task, and # it doesn't matter if this would fail for some reason.
+
+pid = fork do
+ StatsCollector.record message, recipient
+end
+# This line ensures that the process performing the stats collection
+# won't become a zombie.
+Process.detach(pid)
+```
+
+What does Process.detach do? 
+It simply spawns a new thread whose sole job is to wait for the child process specified by pid to exit. 
+This ensures that the kernel doesn't hang on to any status information we don't need.
+
+ruby Process.detach doesnt map anything to system call . coz it's implemented in Ruby simply as a thread and Process.wait . 
+
+## Chapter 16: Processes Can Get Signals
+
+
 
 
 
