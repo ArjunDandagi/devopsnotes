@@ -310,8 +310,45 @@ ruby Process.detach doesnt map anything to system call . coz it's implemented in
 
 ## Chapter 16: Processes Can Get Signals
 
+Signal delivery is unreliable. By this I mean that if your code is handling a CHLD signal while another child process dies you may or may not receive a second CHLD signal.
 
+Sometimes the timing will be such that things will work out perfectly, and sometimes you'll actually 'miss' an instance of a child process dying.
 
+most likey this happens if there is a burst of child processes that are exiting in succession ( same signal several times in quick succession, you can always count on at least one instance of the signal arriving ) 
+
+To properly handle CHLD you must call Process.wait in a loop and look for as many dead child processes as are available, 
+since you may have received multiple CHLD signals since entering the signal handler. But....isn't Process.wait a blocking call?
+If there's only one dead child process and I call Process.wait again how will I avoid blocking the whole process?
+
+Process.wait also takes a second argument, flags. One such flag that can be passed tells the kernel not to block if no child has exited. 
+Just what we need!
+There's a constant that represents the value of this flag, Process::WNOHANG , and it can be used like so:
+
+```
+Process.wait(-1, Process::WNOHANG)
+```
+
+Process.wait  raise Errno::ECHILD if no child processes exist. So you must handle the Errno::ECHILD exception in your CHLD signal handler.
+
+```
+rescue Errno::ECHILD
+```
+
+If you don't know how many child processes you are waiting on you should rescue that exception and handle it properly.
+
+> Signals Primer:
+
+**Signals are asynchronous communication.**
+When a process receives a signal from the kernel it can do one of the following:
+1. ignore the signal
+2. perform a specified action
+3. perform the default action
+
+> Where do Signals Come From?
+
+Technically signals are sent by the kernel, just like text messages are sent by a cell phone carrier
+But text messages have an original sender, and so do signals. 
+Signals are sent from one process to another process, using the kernel as a middleman
 
 
 
