@@ -460,7 +460,31 @@ since pipe are IO objects  we can use IO methods on them , not just read and wri
 When working with an IO stream, like pipes or TCP sockets, you write your data to the stream followed by some protocol-specific delimiter. 
 For example, HTTP uses a series of newlines to delimit the headers from the body.
 
+Then when reading data from that IO stream you read it in one chunk at a time, stopping when you come across the delimiter.( That is why puts and gets was used for newline as delimeter)
 
+Unix sockets are a type of socket that can only communicate on the same physical machine. 
+As such it's much faster than TCP sockets and is a great fit for IPC.
+
+```
+require socket 
+Socket.pair(:UNIX,:DGRAM,0)
+```
+This creates a pair of UNIX sockets these sockets that are already connected up to each other
+These sockets communicate using datagrams, rather than a stream. In this way you write a whole message to one of the sockets and read a whole message from the other socket. No delimiters required.
+
+
+Sockets are used for biderectional transfer.
+
+**Remote IPC?**
+If you're interested in scaling up from one machine to many machines while still doing something resembling IPC there are a few things to look into. The first one would simply be to communicate via TCP sockets. 
+
+other solutions like RPC( remote procedural calls) , a message system like ZeroMQ ( aws SQS)  
+
+**REAL WORLD**
+many child processes communicate over a single pipe with their parent process.
+
+**System Calls**
+Ruby's IO.pipe maps to pipe(2), Socket.pair maps to socketpair(2). Socket.recv maps to recv(2) and Socket.send maps to send(2).
 
 
  
