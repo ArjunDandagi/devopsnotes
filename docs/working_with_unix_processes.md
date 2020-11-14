@@ -405,6 +405,64 @@ Ruby's Process.kill maps to kill(2), Kernel#trap maps roughly to sigaction(2). s
 
 
 ## Chapter 17: Processes Can Communicate
+
+Inter Process Communication (IPC)
+There are many different ways to do IPC but Author covered two commonly useful method: pipes and socket pairs
+
+**Our First Pipe**
+A pipe is a uni-directional stream of data. In other words you can open a pipe,
+one process can 'claim' one end of it and another process can 'claim' the other end. 
+Then data can be passed along the pipe but only in one direction
+
+So if one process 'claims' the position of reader, rather than writer, it will not be able to write to the pipe. And vice versa.
+
+ruby code for creating a pipe 
+```
+reader, writer = IO.pipe #=> [#<IO:fd 5>, #<IO:fd 6>]
+```
+IO.pipe returns an array with two elements, both of which are IO objects.
+
+The IO objects returned from IO.pipe can be thought of something like anonymous files. You can basically treat them the same way you would a File . You can call #read ,
+#write , #close , etc. But this object won't respond to #path and won't have a location on the filesystem
+
+pipes are one way only.. which means trying to write a read end will throw error (IOError)
+
+
+**Sharing Pipes**
+
+Pipes are considered a resource, they get their own file descriptors and everything, so they are shared with child processes.
+
+```
+reader,writer=IO.pipe
+
+fork do 
+	reader.close 
+
+	for i in 1..10 do 
+		writer.puts "Message #{i} from child"
+	end
+end
+
+writer.close
+
+while message = reader.gets
+	$stdout.puts message
+end
+```
+
+as you can see the unused ends are closed so as to  not to interfere with EOF being sent. 
+also when a fork there are 4 ends pointing to read and write .. so the unused ends must be closed . 
+
+since pipe are IO objects  we can use IO methods on them , not just read and write , here we have used  puts and gets method. 
+
+
+**Streams vs. Messages**
+When working with an IO stream, like pipes or TCP sockets, you write your data to the stream followed by some protocol-specific delimiter. 
+For example, HTTP uses a series of newlines to delimit the headers from the body.
+
+
+
+
  
  
  
