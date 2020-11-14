@@ -370,7 +370,41 @@ The original purpose of signals was to specify different ways that a process sho
 ```
 you can silently ignore any signal. but SIGKILL is the boss of all signal. that is why, A BOFH ( bastard operator from hell) would use Kill -9 <PID>
  
- > Signal Handlers are Global
+ **Signal Handlers are Global**
+ 
+trapping Signals in unix are bit like global variables. you might be overwriting a something that someother code depends on . 
+ and unlike global variables the signals can not be namespaced. 
+ 
+**Being Nice about Redefining Signals** //TODO , read this again when needed , page 85 ch16. 
+
+
+In terms of best practices your code probably shouldn't define any signal handlers, unless it's a server. As in a long-running process that's booted from the command line. It's very rare that library code should trap a signal.
+
+```
+# the friendly method of trapping a signal
+old_handler = trap(:QUIT) { 
+# do some cleanup
+puts 'All done!'
+old_handler.call if old_handler.respond_to?(:call) }
+```
+This handler for the QUIT signal will preserve any previous QUIT handlers that have been defined. Though this looks 'friendly' it's not generally a good idea. Imagine a scenario where a Ruby server tells its users they can send it a QUIT signal and it will do a graceful shutdown. You tell the users of your library that they can send a QUIT signal and it will draw an ASCII rainbow. Now if a user sends the QUIT signal both handlers will be invoked. This violates the expectations of both libraries.
+
+Whether or not you decide to preserve previously defined signal handlers is up to you,
+just make sure you know why you're doing it.
+If you simply want to wire up some behaviour to clean up resources before exiting you can use an at_exit hook,
+
+**When Can't You Receive Signals?**
+
+signals are asynchronous , that is how you can stop an infinite sleepy function , a method hogging resources , etc.  that is the power of signals. 
+
+With signals, any process can communicate with any other process on the system, so long as it knows its pid.
+In the real world signals are mostly used by long running processes like servers and daemons. And for the most part it will be the human users who are sending signals rather than automated programs
+
+**System Calls**
+Ruby's Process.kill maps to kill(2), Kernel#trap maps roughly to sigaction(2). signal(7) is also useful
+
+
+## Chapter 17: Processes Can Communicate
  
  
  
