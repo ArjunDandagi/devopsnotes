@@ -487,11 +487,98 @@ many child processes communicate over a single pipe with their parent process.
 Ruby's IO.pipe maps to pipe(2), Socket.pair maps to socketpair(2). Socket.recv maps to recv(2) and Socket.send maps to send(2).
 
 
+ ## Chapter 18: Daemon Processes
+ 
+ Processes that run in the background than the control of a user , like webserver , DB server. 
+ 
+ Daemon processes are also at the core of your operating system. There are many processes that are constantly running in the background that keep your system functioning normally.
+ 
+ things like Ding notification , GUI on your laptop are all running in background (AKA , as daemon).
+ 
+ **The First Process**
+ When the kernel is bootstrapped it spawns a process called the init process.
+ his process has a ppid of 0 and is the 'grandparent of all processes'.
+ It's the first one and it has no ancestor. Its pid is 1 .
+ 
+ **Creating Your First Daemon Process**
+ ```
+def daemonize_app
+	if RUBY_VERSION < "1.9"
+	
+		exit if fork
+		Process.setsid
+		exit if fork
+		Dir.chdir "/"
+		STDIN.reopen "/dev/null"
+		STDOUT.reopen "/dev/null", "a"
+		STDERR.reopen "/dev/null", "a"
+	else
+		Process.daemon
+	end
+end
+ 
+ ```
+ 
+ Lets understand the code : 
+ 
+ In Ruby 1.9.x, it ships with a method called Process.daemon that will daemonize the current process.
+ 
+ > exit if fork # return pid for parent , and nil for child , 
+ 
+ so .As always, the return value will be truth-y for the parent and false-y for the child
+ This means that the parent process will exit, and as we know, orphaned child processes carry on as normal.
+ 
+ if the Process becomes orphan then who is the parent for it ? what is the value for Process.ppid? ... as we know the Init process is grandfather of 
+ all process that were dangling .. the init becomes father for such process. 
  
  
- 
+> Process.setsid
+This first step is imperative when creating a daemon because it causes the terminal that invoked this script to think the command is done, returning control to the terminal and taking it out of the equation.
 
+Calling Process.setsid does three things:
+1. The process becomes a session leader of a new session
+2. The process becomes the process group leader of a new process group
+3. The process has no controlling terminal
 
+**Process Groups and Session Groups**
+
+Process groups and session groups are all about job control. job control is nothing but the way the processes are handled by controlling terminal
+
+Each and every process belongs to a group, and each group has a unique integer id.
+A process group is just a collection of related processes, typically a parent process and its children.
+
+However you can also group your processes arbitrarily by setting their group id using 
+```
+Process.setpgrp(new_group_id)
+```
+
+```
+puts Process.getpgrp
+puts Process.pid
+```
+Typically the process group id will be the same as the pid of the process group leader. 
+
+The process group leader is the 'originating' process of a terminal command.
+ie. If you start an irb process at the terminal it will become the group leader of a new process group.
+Any child processes that it creates will be made part of the same process group.
+
+so basically ProcessGroupId are inherited
+```
+puts Process.pid 
+puts Process.getpgrp
+
+fork {
+puts Process.pid
+puts Process.ppid
+puts Process.getpgrp
+}
+```
+
+child processes are not given special treatment by the kernel. Exit a parent process and the child will continue on.
+
+This is the behaviour when a parent process exits, but the behaviour is a bit different when the parent process is being controlled by a terminal and is killed by a signal. ( a detailed example at ch17. page 102)
+
+The terminal receives the signal and forwards it on to any process in the foreground process group.
 
 
 
