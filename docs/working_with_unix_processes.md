@@ -627,6 +627,85 @@ Ruby's Process.setsid maps to setsid(2), Process.getpgrp maps to getpgrp(2). Oth
 
 ## Chapter 19: Spawning Terminal Processes
 
+**Fork+exec**
+
+fork(2) - forks a new child process 
+exec(2)- allows you to replace the current process with a different process.
+
+Put another way: exec(2) allows you to transform the current process into any other process. You can take a Ruby process and turn it into a Python process, or an ls(1) process, or another Ruby process.
+Once you've transformed your Ruby process into something else you can never come back.
+that is why fork+exec makes the best combo.
+You can use fork(2) to create a new process, then use exec(2) to transform that process into anything you like.
+
+***
+exec(2) doesn't close any open file descriptors (by default) or do any memory cleanup. You can use this to your advantage in certain situations. In other situations it may cause problems with resource usage.
+***
+
+```
+hosts = File.open('/etc/hosts')
+exec 'python', '-c', "import os; print os.fdopen(#{hosts.fileno}).read()"
+```
+the hosts variable was shared with a python code , because , exec shared the memory . 
+
+**Arguments to exec**
+
+2 ways 
+1. as string - it will start the process and sends entire string to shell to interpret
+2. as a comma separated values - Pass an array and it will skip the shell and set up the array directly as the ARGV to the new process.
+
+Generally you want to avoid passing a string unless you really need to. Pass an array where possible.
+
+kernel#` ---> gives output as STDOUT of the terminal program collected into a String.
+
+Kernel#` and %x[<command_here>] do the exact same thing.
+
+but Kernel#system  is a blocking call , meaning , code wont continue until the system function executes
+
+we also have Process.spawn() in RUBY that won't   block you from other stuff to execute . 
+
+All code looks the same to the kernel; that's what makes it such a flexible system. You can use any programming language to interact with any other programming language, and all will be treated equally.
+
+** more stuff like . IO.popen ( about using pipe with fork+exec that ruby has is explained here) 
+** and open3. Open3 allows simultaneous access to the STDIN, STDOUT, and STDERR of a spawned process.
+
+```
+require 'open3'
+Open3.popen3('grep', 'data') { |stdin, stdout, stderr| stdin.puts "some\ndata"
+stdin.close
+puts stdout.read
+}
+# Open3 will use Process.spawn when available. Options can be passed to # Process.spawn like so:
+Open3.popen3('ls', '-uhh', :err => :out) { |stdin, stdout, stderr|
+puts stdout.read }
+```
+Open3 acts like a more flexible version of IO.popen , for those times when you need it.
+
+**In the Real World**
+
+One drawback to all of these methods is that they rely on fork(2). What's wrong with that? Imagine this scenario: You have a big Ruby app that is using hundreds of MB of memory. You need to shell out. If you use any of the methods above you'll incur the cost of forking.
+Even if you're shelling out to a simple ls(1) call the kernel will still need to make sure that all of the memory that your Ruby process is using is available for that new ls process. why ? because that is what the API for fork is for.kernel doesn't know that you're about to transform that process with an exec(2). You may be forking in order to run Ruby code, in which case you'll need to have all of the memory available.
+
+There are some native Unix system calls for spawning processes without the overhead of fork(2). ( not for ruby ) 
+posix-spawn mimics the Process.spawn API. In fact, most of the options that you pass to Process.spawn can also be passed to POSIX::Spawn.spawn . So you can keep using the same API and yet reap the benefits of faster, more resource efficient spawning.
+
+
+**System Calls**
+Ruby's Kernel#system maps to system(3), Kernel#exec maps to execve(2), IO.popen maps to popen(3), posix-spawn uses posix_spawn(2).
+
+
+## Chapter 20: Ending
+
+Working with processes in Unix is about two things: abstraction and communication.
+
+**Abstraction:**
+In the end, all of our code is compiled down to something simple that the kernel can understand.
+And when it's working at that level all processes are treated the same. Everything gets its numeric identifier and is given equal access to the resources of the kernel.
+
+Using Unix programming lets you twiddle with these knobs a little bit. It lets you do things that you can't accomplish when working at the programming language level.
+
+**Communication:**
+Using signals any two processes on the system can communicate with each other. By naming your processes you can communicate with any user who is inspecting your program on the command line. Using exit codes you can send success/failure messages to any process that's looking after your own.
+
 
 
 
