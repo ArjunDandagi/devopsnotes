@@ -581,6 +581,57 @@ This is the behaviour when a parent process exits, but the behaviour is a bit di
 The terminal receives the signal and forwards it on to any process in the foreground process group.
 
 
+so in the code about creating daemon , the parent exits and child inherits both processgroup id and session id , but this child process is not a session leader
+
+so 
+Process.setsid , will ensure that child process gets a new session id and becomes session leader . 
+this will work if the process is not the session leader alredy , which means , if you call this method in parent process the call will fail.
+so this command should only be used in child process
+
+this new process now don't have a controlling terminal.  but can be assigned 
+
+```
+exit if fork
+```
+
+The forked process that had just become a process group and session group leader forks again and exits . 
+
+This newly forked process is no longer a process group leader nor a session leader. Since the previous session leader had no controlling terminal, and this process is not a session leader, it's guaranteed that this process can never have a controlling terminal.
+
+Terminals can only be assigned to session leaders. ## Important 
+
+so now the process is completely daemon.
+
+```
+Dir.chdir "/"
+```
+This isn't strictly necessary but it's an extra step to ensure that current working directory of the daemon doesn't disappear during its execution.
+
+```
+STDIN.reopen "/dev/null"
+STDOUT.reopen "/dev/null", "a"
+STDERR.reopen "/dev/null", "a"
+```
+This sets all of the standard streams to go to /dev/null , a.k.a. to be ignored.
+Since the daemon is no longer attached to a terminal session these are of no use anyway.
+They can't simply be closed because some programs expect them to always be available.
+Redirecting them to /dev/null ensures that they're still available to the program but have no effect
+
+** In the real World**
+If you think you want to create a daemon process you should ask yourself one basic question: Does this process need to stay responsive forever?
+
+If the answer is no then you probably want to look at a cron job or background job system. If the answer is yes, then you probably have a good candidate for a daemon process.
+
+** System Calls**
+Ruby's Process.setsid maps to setsid(2), Process.getpgrp maps to getpgrp(2). Other system calls mentioned in this chapter were covered in detail in previous chapters.
+
+## Chapter 19: Spawning Terminal Processes
+
+
+
+
+
+
 
 
 
