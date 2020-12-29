@@ -14,6 +14,10 @@ NOTES - theory
 7. replication-factor can never be greater than the no of Broker nodes
 8. each partition will always have a leader ( and then inactive sync replica)
 9. zookeeper manages the leader election in case nodes goes down , comes up etc
+10. you can opt for acks from producer( ack=1, ack=0 , ack=all)
+11. produces can recover from error 
+12. consumer-group is the group of consumer consuming a topic , they will have offset committed to a topic named "__consumer_offesets"
+
 
 
 
@@ -49,6 +53,48 @@ Topic first_topic is marked for deletion.
 Note: This will have no impact if delete.topic.enable is not set to true.
 
 ```
+
+## kafka-console-producer
+
+to start publishing to a topic with default properties 
+```
+./bin/kafka-console-producer.sh --broker-list 127.0.0.1:9092  --topic first_topic 
+
+## this will return a prompt with ">" symbol , where you can type each message and press enter and once done, press CTRL+c to exit
+```
+this also has additional fields like --producer-property 
+ex.
+```
+./bin/kafka-console-producer.sh --broker-list 127.0.0.1:9092  --topic first_topic --producer-property acks=all 
+```
+a kafka-console-producer creates a traffic once you send the first message -- shortcut to start sending data to a new topic 
+in this case , only one replication factor and one partition is created
+
+```
+./bin/kafka-console-producer.sh --broker-list 127.0.0.1:9092  --topic second_topic
+>whoami
+[2020-12-29 16:22:22,681] WARN [Producer clientId=console-producer] Error while fetching metadata with correlation id 3 : {second_topic=LEADER_NOT_AVAILABLE} (org.apache.kafka.clients.NetworkClient)
+>whoareyou
+>i am arjun 😁
+
+```
+always create topic with proper configs otherwise it will use 1 as default for partition and replication factor.
+( you can change in server.properties for default) - num.partitions
+
+
+## kafka-console-consumer 
+
+doesn't read all the data before launching data . so consumer should be up and running to see the message produced by producer
+```
+./bin/kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic first_topic
+```
+
+to read all the message use "--from-beginning"
+
+
+
+
+
 
 
 
