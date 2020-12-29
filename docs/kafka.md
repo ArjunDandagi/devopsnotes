@@ -91,7 +91,10 @@ doesn't read all the data before launching data . so consumer should be up and r
 
 to read all the message use "--from-beginning"
 
-
+using group 
+```
+./bin/kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my_first_app_group
+```
 
 
 
