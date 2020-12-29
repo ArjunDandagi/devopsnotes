@@ -96,6 +96,32 @@ using group
 ./bin/kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my_first_app_group
 ```
 
+consumer groups dont work everytime with --from-beginning , since the offset is alreday committed to kafka for a group name . if you run the 
+same command with same group name it will not read from the very beginning , 
+however it does display all the messages that are produced afterwards. 
+
+
+## kafka-consumers-groups
+
+describe all-groups  ( similary , delete , describe single group using --group "group_name") 
+```
+./bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --all-groups
+```
+
+resettings offsets 
+```
+./bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group first_app_group --reset-offsets --to-earliest --execute --topic topic id #<has many optin>. --execute is necessary
+
+--shift-by -2 . ( back 2 )
+```
+
+
+
+
+
+
+
+
 
 
 
