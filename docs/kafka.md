@@ -17,8 +17,7 @@ NOTES - theory
 10. you can opt for acks from producer( ack=1, ack=0 , ack=all)
 11. produces can recover from error 
 12. consumer-group is the group of consumer consuming a topic , they will have offset committed to a topic named "__consumer_offesets"
-
-
+13. when you produce a record ( message) with a key ,kafka always ensure that same key is put in the same parition  ( example , using a truckID as key )
 
 
 ## Topics 
