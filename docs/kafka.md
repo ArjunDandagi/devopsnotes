@@ -18,6 +18,7 @@ NOTES - theory
 11. produces can recover from error 
 12. consumer-group is the group of consumer consuming a topic , they will have offset committed to a topic named "__consumer_offesets"
 13. when you produce a record ( message) with a key ,kafka always ensure that same key is put in the same parition  ( example , using a truckID as key )
+14. consumers have the ability to spread the partition and reassign themeselves as and when more consumer of the "SAME GROUP" join and leave
 
 
 ## Topics 
