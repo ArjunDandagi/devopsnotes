@@ -77,7 +77,15 @@ touch $@
  
  //TODO: create a package in launchpad to install a package using apt
  
- # npm
+# maven 
+[Official sonatype resources](https://central.sonatype.org/pages/ossrh-guide.html)
+[jenkov quick tip to deploy ](http://tutorials.jenkov.com/maven/publish-to-central-maven-repository.html)
+
+my package is now at [MAVEN](https://repo.maven.apache.org/maven2/io/github/arjundandagi/topic-application/)
+read about it in [GITHUB](https://github.com/arjundandagi/topic-application)
+
+
+# npm
  
  > prints-yourname
 
