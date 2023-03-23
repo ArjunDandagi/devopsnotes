@@ -12,12 +12,12 @@ you can create an interface for multiple resources to manage these resources usi
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xirsas.riskml.platform
+  name: xirsas.example.company
 spec:
   claimNames:
     kind: IRSA
     plural: irsas
-  group: riskml.platform
+  group: example.company
   names:
     kind: XIRSA
     plural: xirsas
@@ -62,10 +62,10 @@ spec:
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: irsa-exact.riskml.platform
+  name: irsa-exact.example.company
 spec:
   compositeTypeRef:
-    apiVersion: riskml.platform/v1alpha1
+    apiVersion: example.company/v1alpha1
     kind: XIRSA
   resources:
     - name: iam-role
@@ -150,7 +150,7 @@ spec:
         - type: FromCompositeFieldPath
           fromFieldPath: status.policyArn
           toFieldPath: spec.forProvider.policyArn
-          ```
+```
 
 This doesn't create a service account (for simplicity i have not installed k8 provider on EKS because there is argo and helm as well. why complicate things). 
 
