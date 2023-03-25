@@ -154,3 +154,8 @@ spec:
 
 This doesn't create a service account (for simplicity i have not installed k8 provider on EKS because there is argo and helm as well. why complicate things). 
 
+- XRD 
+- XR 
+- Composition 
+- Claim (End user uses this)
+
